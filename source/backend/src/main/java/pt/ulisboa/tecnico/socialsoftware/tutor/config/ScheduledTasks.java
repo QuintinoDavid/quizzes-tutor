@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.socialsoftware.tutor.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pt.ulisboa.tecnico.socialsoftware.tutor.answer.AnswerService;
@@ -12,7 +13,11 @@ import pt.ulisboa.tecnico.socialsoftware.tutor.impexp.ImpExpService;
 
 import java.util.List;
 
+// On by default. --scheduled-tasks.enabled=false turns the tasks off, for example for atg: the
+// reset of the demo course at 01:00 deletes the data that the tests use, and the other tasks
+// change the statistics or export every course while the tests run.
 @Component
+@ConditionalOnProperty(name = "scheduled-tasks.enabled", havingValue = "true", matchIfMissing = true)
 public class ScheduledTasks {
     @Autowired
     private ImpExpService impExpService;
