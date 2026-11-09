@@ -1,8 +1,0 @@
-__pycache__/
-.pytest_cache/
-.env
-!scripts/
-# Local SQLite database (default DATABASE_URL)
-*.db
-.venv/
-materials/
