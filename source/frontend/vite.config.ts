@@ -26,6 +26,17 @@ export default defineConfig({
     host: '0.0.0.0'
   },
   envPrefix: 'VUE_APP_',
+  // atg reads the source maps to measure the lines of the browser code that the tests run.
+  // Rollup writes the sources relative to the folder of each map, so they start with ../, and
+  // atg does not count such paths. The transform removes the leading ../ segments.
+  build: {
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        sourcemapPathTransform: relativeSourcePath => relativeSourcePath.replace(/^(\.\.\/)+/, ''),
+      },
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',
